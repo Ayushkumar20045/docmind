@@ -6,7 +6,10 @@ from pypdf import PdfReader
 
 
 UPLOAD_DIRECTORY = Path("uploads")
+PROCESSED_DIRECTORY = Path("processed")
+
 UPLOAD_DIRECTORY.mkdir(exist_ok=True)
+PROCESSED_DIRECTORY.mkdir(exist_ok=True)
 
 
 def save_pdf(file: UploadFile):
@@ -23,7 +26,16 @@ def save_pdf(file: UploadFile):
         text = page.extract_text()
 
         if text:
-            extracted_text += text
+            extracted_text += text + "\n"
+
+    text_file_path = (
+        PROCESSED_DIRECTORY / f"{file_path.stem}.txt"
+    )
+
+    text_file_path.write_text(
+        extracted_text,
+        encoding="utf-8",
+    )
 
     return {
         "filename": file.filename,
