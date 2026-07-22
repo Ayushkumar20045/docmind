@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.routes.documents import router as document_router
+
 app = FastAPI(
     title="DocMind API",
     version="1.0.0",
@@ -16,9 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(document_router)
+
+
 @app.get("/")
 def root():
     return {"message": "Welcome to DocMind API"}
+
 
 @app.get("/health")
 def health():
