@@ -92,6 +92,10 @@ function UploadBox() {
             <p>
               <strong>Characters:</strong> {documentInfo.characters}
             </p>
+
+            <p>
+              <strong>Chunks Created:</strong> {documentInfo.chunks}
+            </p>
           </div>
         </div>
       )}

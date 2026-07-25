@@ -40,5 +40,22 @@ class VectorStore:
             metadatas=metadatas,
         )
 
+    def search(
+        self,
+        query_embedding: list[float],
+        top_k: int,
+    ) -> list[str]:
+        results = self.collection.query(
+            query_embeddings=[query_embedding],
+            n_results=top_k,
+        )
+
+        documents = results.get("documents", [])
+
+        if not documents:
+            return []
+
+        return documents[0]
+
 
 vector_store = VectorStore()
