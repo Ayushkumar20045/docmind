@@ -6,4 +6,5 @@ class DocumentUploadResponse(BaseModel):
     file_size: int
     pages: int
     characters: int
+    chunks: int
     message: str

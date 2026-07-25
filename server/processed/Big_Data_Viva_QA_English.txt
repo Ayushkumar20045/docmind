@@ -1,0 +1,101 @@
+Big Data Analytics Lab Viva Questions with Answers
+1. What is Big Data?
+Ans: Big Data refers to extremely large datasets that cannot be processed by traditional systems.
+2. What are the 5 V's of Big Data?
+Ans: Volume, Velocity, Variety, Veracity, and Value.
+3. What is Hadoop?
+Ans: Hadoop is an open-source framework for distributed storage and processing of large datasets.
+4. What are the main components of Hadoop?
+Ans: HDFS, MapReduce, and YARN.
+5. What is HDFS?
+Ans: HDFS (Hadoop Distributed File System) stores data across multiple machines.
+6. What is a block in HDFS?
+Ans: A block is the smallest unit of data storage in HDFS, usually 128 MB.
+7. What is NameNode?
+Ans: NameNode manages metadata and directory structure in HDFS.
+8. What is DataNode?
+Ans: DataNode stores actual data blocks and sends heartbeats to the NameNode.
+9. What happens if a NameNode fails?
+Ans: A secondary or standby NameNode can restore metadata backup.
+10. What is replication in HDFS?
+Ans: Replication means copying each block to multiple nodes for fault tolerance.
+11. What is MapReduce?
+Ans: MapReduce is a programming model for parallel data processing on Hadoop.
+12. What are the phases of MapReduce?
+Ans: Map phase and Reduce phase.
+13. What is YARN?
+Ans: YARN (Yet Another Resource Negotiator) manages cluster resources and job scheduling.
+14. What is the difference between Hadoop 1.x and 2.x?
+Ans: Hadoop 2.x introduced YARN for better scalability and resource management.
+15. What is Hive?
+Ans: Hive is a data warehouse tool that uses SQL-like queries (HiveQL) on Hadoop.
+16. What is Pig?
+Ans: Pig is a high-level scripting platform that converts Pig Latin scripts into MapReduce jobs.
+17. What is HBase?
+Ans: HBase is a NoSQL database on HDFS for real-time read/write access to Big Data.
+18. What is Sqoop?
+Ans: Sqoop is used to transfer data between Hadoop and relational databases.
+19. What is Flume?
+Ans: Flume is used for collecting and transferring large volumes of streaming data to HDFS.
+20. What is Oozie?
+Ans: Oozie is a workflow scheduler used to manage Hadoop jobs.
+21. What is Apache Spark?
+Ans: Spark is a fast, in-memory data processing framework that supports batch and real-time analytics.
+22. What is RDD?
+Ans: RDD (Resilient Distributed Dataset) is a basic data structure in Spark for distributed computing.
+23. What is the difference between Spark and Hadoop MapReduce?
+Ans: Spark processes data in memory; MapReduce writes intermediate data to disk.
+24. What is the role of Zookeeper?
+Ans: Zookeeper coordinates distributed applications and manages configuration information.
+25. What is speculative execution in Hadoop?
+Ans: It runs duplicate tasks on slower nodes to prevent job delays.
+26. What is a Combiner in MapReduce?
+Ans: A mini-reducer that performs local aggregation before the reduce phase.
+27. What is Partitioner in MapReduce?
+Ans: It controls how the intermediate key-value pairs are distributed to reducers.
+28. What is a Data Lake?
+Ans: A storage system that holds raw data in its native format until needed.
+29. What is Data Cleaning?
+Ans: The process of correcting or removing inaccurate or incomplete data.
+30. What is the function of ResourceManager in YARN?
+Ans: It allocates resources and manages the overall cluster workload.
+31. What is NodeManager?
+Ans: NodeManager runs on each node and manages resources locally.
+32. What is schema-on-read?
+Ans: Data is stored as-is and schema is applied when reading the data.
+33. What is schema-on-write?
+Ans: Schema is applied before storing the data.
+34. What is a JobTracker?
+Ans: In Hadoop 1.x, JobTracker manages and schedules MapReduce jobs.
+35. What is a TaskTracker?
+Ans: It executes tasks as directed by the JobTracker on each node.
+36. What are the three modes of Hadoop?
+Ans: Standalone, Pseudo-distributed, and Fully-distributed mode.
+37. What is the default replication factor in Hadoop?
+Ans: The default replication factor is 3.
+38. What is a DataNode heartbeat?
+Ans: A periodic signal sent by DataNodes to NameNode to indicate they are active.
+39. What command checks Hadoop version?
+Ans: Use 'hadoop version' command.
+40. What command lists files in HDFS?
+Ans: Use 'hdfs dfs -ls /' command.
+41. What command copies a file to HDFS?
+Ans: Use 'hdfs dfs -put localfile /destinationpath'.
+42. What is the command to remove a file in HDFS?
+Ans: Use 'hdfs dfs -rm filename'.
+43. What is the command to check HDFS disk usage?
+Ans: Use 'hdfs dfs -du -h /'.
+44. What are the advantages of Hadoop?
+Ans: Scalability, fault tolerance, cost-effectiveness, and flexibility.
+45. What are the disadvantages of Hadoop?
+Ans: High latency, complex setup, and not suitable for small data.
+46. What is the role of Secondary NameNode?
+Ans: It merges NameNode logs to prevent metadata overflow.
+47. What is HiveQL?
+Ans: HiveQL is a SQL-like query language used in Hive.
+48. What is the difference between Hive and Pig?
+Ans: Hive uses SQL-like syntax, while Pig uses a scripting language (Pig Latin).
+49. What are the types of joins in Hive?
+Ans: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN.
+50. What is checkpointing in Hadoop?
+Ans: Checkpointing saves metadata snapshots to recover NameNode faster.

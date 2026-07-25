@@ -1,0 +1,54 @@
+[
+    {
+        "chunk_id": 1,
+        "text": "Big Data Analytics Lab Viva Questions with Answers\n1. What is Big Data?\nAns: Big Data refers to extremely large datasets that cannot be processed by traditional systems.\n2. What are the 5 V's of Big Data?\nAns: Volume, Velocity, Variety, Veracity, and Value.\n3. What is Hadoop?\nAns: Hadoop is an open-source framework for distributed storage and processing of large datasets.\n4. What are the main components of Hadoop?\nAns: HDFS, MapReduce, and YARN.\n5. What is HDFS?"
+    },
+    {
+        "chunk_id": 2,
+        "text": "4. What are the main components of Hadoop?\nAns: HDFS, MapReduce, and YARN.\n5. What is HDFS?\nAns: HDFS (Hadoop Distributed File System) stores data across multiple machines.\n6. What is a block in HDFS?\nAns: A block is the smallest unit of data storage in HDFS, usually 128 MB.\n7. What is NameNode?\nAns: NameNode manages metadata and directory structure in HDFS.\n8. What is DataNode?\nAns: DataNode stores actual data blocks and sends heartbeats to the NameNode.\n9. What happens if a NameNode fails?"
+    },
+    {
+        "chunk_id": 3,
+        "text": "9. What happens if a NameNode fails?\nAns: A secondary or standby NameNode can restore metadata backup.\n10. What is replication in HDFS?\nAns: Replication means copying each block to multiple nodes for fault tolerance.\n11. What is MapReduce?\nAns: MapReduce is a programming model for parallel data processing on Hadoop.\n12. What are the phases of MapReduce?\nAns: Map phase and Reduce phase.\n13. What is YARN?\nAns: YARN (Yet Another Resource Negotiator) manages cluster resources and job scheduling."
+    },
+    {
+        "chunk_id": 4,
+        "text": "Ans: YARN (Yet Another Resource Negotiator) manages cluster resources and job scheduling.\n14. What is the difference between Hadoop 1.x and 2.x?\nAns: Hadoop 2.x introduced YARN for better scalability and resource management.\n15. What is Hive?\nAns: Hive is a data warehouse tool that uses SQL-like queries (HiveQL) on Hadoop.\n16. What is Pig?\nAns: Pig is a high-level scripting platform that converts Pig Latin scripts into MapReduce jobs.\n17. What is HBase?"
+    },
+    {
+        "chunk_id": 5,
+        "text": "17. What is HBase?\nAns: HBase is a NoSQL database on HDFS for real-time read/write access to Big Data.\n18. What is Sqoop?\nAns: Sqoop is used to transfer data between Hadoop and relational databases.\n19. What is Flume?\nAns: Flume is used for collecting and transferring large volumes of streaming data to HDFS.\n20. What is Oozie?\nAns: Oozie is a workflow scheduler used to manage Hadoop jobs.\n21. What is Apache Spark?"
+    },
+    {
+        "chunk_id": 6,
+        "text": "Ans: Oozie is a workflow scheduler used to manage Hadoop jobs.\n21. What is Apache Spark?\nAns: Spark is a fast, in-memory data processing framework that supports batch and real-time analytics.\n22. What is RDD?\nAns: RDD (Resilient Distributed Dataset) is a basic data structure in Spark for distributed computing.\n23. What is the difference between Spark and Hadoop MapReduce?\nAns: Spark processes data in memory; MapReduce writes intermediate data to disk.\n24. What is the role of Zookeeper?"
+    },
+    {
+        "chunk_id": 7,
+        "text": "24. What is the role of Zookeeper?\nAns: Zookeeper coordinates distributed applications and manages configuration information.\n25. What is speculative execution in Hadoop?\nAns: It runs duplicate tasks on slower nodes to prevent job delays.\n26. What is a Combiner in MapReduce?\nAns: A mini-reducer that performs local aggregation before the reduce phase.\n27. What is Partitioner in MapReduce?\nAns: It controls how the intermediate key-value pairs are distributed to reducers.\n28. What is a Data Lake?"
+    },
+    {
+        "chunk_id": 8,
+        "text": "28. What is a Data Lake?\nAns: A storage system that holds raw data in its native format until needed.\n29. What is Data Cleaning?\nAns: The process of correcting or removing inaccurate or incomplete data.\n30. What is the function of ResourceManager in YARN?\nAns: It allocates resources and manages the overall cluster workload.\n31. What is NodeManager?\nAns: NodeManager runs on each node and manages resources locally.\n32. What is schema-on-read?"
+    },
+    {
+        "chunk_id": 9,
+        "text": "Ans: NodeManager runs on each node and manages resources locally.\n32. What is schema-on-read?\nAns: Data is stored as-is and schema is applied when reading the data.\n33. What is schema-on-write?\nAns: Schema is applied before storing the data.\n34. What is a JobTracker?\nAns: In Hadoop 1.x, JobTracker manages and schedules MapReduce jobs.\n35. What is a TaskTracker?\nAns: It executes tasks as directed by the JobTracker on each node.\n36. What are the three modes of Hadoop?"
+    },
+    {
+        "chunk_id": 10,
+        "text": "36. What are the three modes of Hadoop?\nAns: Standalone, Pseudo-distributed, and Fully-distributed mode.\n37. What is the default replication factor in Hadoop?\nAns: The default replication factor is 3.\n38. What is a DataNode heartbeat?\nAns: A periodic signal sent by DataNodes to NameNode to indicate they are active.\n39. What command checks Hadoop version?\nAns: Use 'hadoop version' command.\n40. What command lists files in HDFS?\nAns: Use 'hdfs dfs -ls /' command."
+    },
+    {
+        "chunk_id": 11,
+        "text": "40. What command lists files in HDFS?\nAns: Use 'hdfs dfs -ls /' command.\n41. What command copies a file to HDFS?\nAns: Use 'hdfs dfs -put localfile /destinationpath'.\n42. What is the command to remove a file in HDFS?\nAns: Use 'hdfs dfs -rm filename'.\n43. What is the command to check HDFS disk usage?\nAns: Use 'hdfs dfs -du -h /'.\n44. What are the advantages of Hadoop?\nAns: Scalability, fault tolerance, cost-effectiveness, and flexibility.\n45. What are the disadvantages of Hadoop?"
+    },
+    {
+        "chunk_id": 12,
+        "text": "45. What are the disadvantages of Hadoop?\nAns: High latency, complex setup, and not suitable for small data.\n46. What is the role of Secondary NameNode?\nAns: It merges NameNode logs to prevent metadata overflow.\n47. What is HiveQL?\nAns: HiveQL is a SQL-like query language used in Hive.\n48. What is the difference between Hive and Pig?\nAns: Hive uses SQL-like syntax, while Pig uses a scripting language (Pig Latin).\n49. What are the types of joins in Hive?"
+    },
+    {
+        "chunk_id": 13,
+        "text": "49. What are the types of joins in Hive?\nAns: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN.\n50. What is checkpointing in Hadoop?\nAns: Checkpointing saves metadata snapshots to recover NameNode faster."
+    }
+]
