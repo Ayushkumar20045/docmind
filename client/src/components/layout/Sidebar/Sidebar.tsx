@@ -1,23 +1,33 @@
+import { Plus } from "lucide-react";
+
+import Navigation from "./Navigation";
+import RecentChats from "./RecentChats";
+
 function Sidebar() {
   return (
-    <aside className="w-72 bg-slate-900 border-r border-slate-800 text-white">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">DocMind</h1>
+    <aside className="flex h-screen w-80 flex-col border-r border-slate-800 bg-slate-950 px-5 py-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-white">
+          DocMind
+        </h1>
+
+        <p className="mt-1 text-sm text-slate-400">
+          AI Workspace
+        </p>
       </div>
 
-      <nav className="px-4 space-y-2">
-        <button className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-left hover:bg-indigo-700 transition">
-          + New Chat
-        </button>
+      <button className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500">
+        <Plus size={18} />
+        New Chat
+      </button>
 
-        <button className="w-full rounded-lg px-4 py-2 text-left hover:bg-slate-800 transition">
-          Documents
-        </button>
+      <div className="mt-8">
+        <Navigation />
+      </div>
 
-        <button className="w-full rounded-lg px-4 py-2 text-left hover:bg-slate-800 transition">
-          Settings
-        </button>
-      </nav>
+      <div className="flex-1" />
+
+      <RecentChats />
     </aside>
   );
 }

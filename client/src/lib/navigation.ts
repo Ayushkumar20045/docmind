@@ -1,19 +1,23 @@
-import { FileText, MessageSquare, Settings } from "lucide-react";
+import {
+  FileText,
+  MessageSquare,
+  Settings,
+} from "lucide-react";
 
 export const navigation = [
   {
-    title: "Chat",
-    path: "/",
+    label: "Chats",
+    href: "/",
     icon: MessageSquare,
   },
   {
-    title: "Documents",
-    path: "/documents",
+    label: "Documents",
+    href: "/documents",
     icon: FileText,
   },
   {
-    title: "Settings",
-    path: "/settings",
+    label: "Settings",
+    href: "/settings",
     icon: Settings,
   },
 ];
