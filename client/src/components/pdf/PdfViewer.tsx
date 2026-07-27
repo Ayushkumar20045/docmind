@@ -1,23 +1,30 @@
 import { FileText } from "lucide-react";
 
-function PdfViewer() {
+function PDFViewer() {
   return (
-    <aside className="flex w-80 flex-col border-l border-slate-800 bg-slate-950">
-      <div className="border-b border-slate-800 p-5">
-        <h2 className="font-semibold text-white">
+    <aside className="flex h-full w-full flex-col border-l border-slate-800 bg-slate-950">
+      <header className="border-b border-slate-800 px-5 py-4">
+        <h2 className="text-sm font-semibold text-white">
           Document Preview
         </h2>
 
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-xs text-slate-500">
           No document selected
         </p>
-      </div>
+      </header>
 
-      <div className="flex flex-1 items-center justify-center p-6">
-        <div className="flex flex-col items-center text-slate-500">
-          <FileText className="mb-4 h-14 w-14" />
-          <p className="text-sm">
-            Upload a doument to preview it here.
+      <div className="flex flex-1 items-center justify-center px-6">
+        <div className="flex max-w-xs flex-col items-center text-center">
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-900 text-slate-500">
+            <FileText size={40} strokeWidth={1.8} />
+          </div>
+
+          <h3 className="text-lg font-semibold text-white">
+            Nothing to preview
+          </h3>
+
+          <p className="mt-3 text-sm leading-6 text-slate-400">
+            Upload a PDF to preview its pages while chatting with DocMind.
           </p>
         </div>
       </div>
@@ -25,4 +32,4 @@ function PdfViewer() {
   );
 }
 
-export default PdfViewer;
+export default PDFViewer;

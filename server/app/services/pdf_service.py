@@ -53,7 +53,11 @@ def save_pdf(file: UploadFile):
         encoding="utf-8",
     )
 
-    embeddings = embedding_service.generate_embeddings(chunk_texts)
+    vector_store.reset_collection()
+
+    embeddings = embedding_service.generate_embeddings(
+        chunk_texts
+    )
 
     vector_store.add_documents(
         chunks=chunk_texts,

@@ -10,9 +10,22 @@ class VectorStore:
             path=str(CHROMA_DIRECTORY)
         )
 
-        self.collection: Collection = self.client.get_or_create_collection(
+        self.collection = self._create_collection()
+
+    def _create_collection(self) -> Collection:
+        return self.client.get_or_create_collection(
             name=COLLECTION_NAME
         )
+
+    def reset_collection(self) -> None:
+        try:
+            self.client.delete_collection(
+                name=COLLECTION_NAME
+            )
+        except Exception:
+            pass
+
+        self.collection = self._create_collection()
 
     def add_documents(
         self,
