@@ -79,8 +79,6 @@ def create_embeddings(
     file_path: Path,
     chunk_texts: list[str],
 ) -> None:
-    vector_store.reset_collection()
-
     embeddings = embedding_service.generate_embeddings(
         chunk_texts
     )
@@ -90,6 +88,30 @@ def create_embeddings(
         embeddings=embeddings,
         source=file_path.stem,
     )
+
+
+def delete_document_files(
+    file_path: str,
+) -> None:
+    pdf_file = Path(file_path)
+
+    text_file = (
+        PROCESSED_DIRECTORY /
+        f"{pdf_file.stem}.txt"
+    )
+
+    chunk_file = (
+        PROCESSED_DIRECTORY /
+        f"{pdf_file.stem}_chunks.json"
+    )
+
+    for path in [
+        pdf_file,
+        text_file,
+        chunk_file,
+    ]:
+        if path.exists():
+            path.unlink()
 
 
 def process_document(

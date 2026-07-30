@@ -1,16 +1,38 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
+from sqlalchemy.orm import Session
 
+from app.core.database import get_db
+from app.core.dependencies import get_current_user
+from app.core.rate_limiter import limiter
+from app.models.user import User
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.chat_service import chat_service
 
-router = APIRouter(prefix="/chat", tags=["Chat"])
+router = APIRouter(
+    prefix="/chat",
+    tags=["Chat"],
+)
 
 
-@router.post("/", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    answer = chat_service.answer_question(request.question)
+@router.post(
+    "/",
+    response_model=ChatResponse,
+)
+@limiter.limit("30/minute")
+async def chat(
+    request: Request,
+    chat_request: ChatRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    answer = chat_service.answer_question(
+        document_id=chat_request.document_id,
+        question=chat_request.question,
+        db=db,
+        current_user=current_user,
+    )
 
     return ChatResponse(
-        question=request.question,
+        question=chat_request.question,
         answer=answer,
     )

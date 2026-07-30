@@ -53,17 +53,34 @@ class VectorStore:
             metadatas=metadatas,
         )
 
+    def delete_document(
+        self,
+        source: str,
+    ) -> None:
+        self.collection.delete(
+            where={
+                "source": source,
+            }
+        )
+
     def search(
         self,
         query_embedding: list[float],
-        top_k: int,
+        source: str,
+        top_k: int = 5,
     ) -> list[str]:
         results = self.collection.query(
             query_embeddings=[query_embedding],
             n_results=top_k,
+            where={
+                "source": source,
+            },
         )
 
-        documents = results.get("documents", [])
+        documents = results.get(
+            "documents",
+            [],
+        )
 
         if not documents:
             return []
