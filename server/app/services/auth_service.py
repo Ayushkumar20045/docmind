@@ -1,29 +1,19 @@
-from fastapi import HTTPException
-from fastapi import status
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.security import (
-    create_access_token,
-    hash_password,
-    verify_password,
-)
+from app.core.security import create_access_token, verify_password
 from app.models.user import User
-from app.schemas.user import (
-    Token,
-    UserLogin,
-    UserRegister,
-)
+from app.repositories.user_repository import UserRepository
+from app.schemas.user import Token, UserRegister
 
 
 def register_user(
     user: UserRegister,
     db: Session,
 ) -> User:
-    existing_user = (
-        db.query(User)
-        .filter(User.email == user.email)
-        .first()
-    )
+    user_repository = UserRepository(db)
+
+    existing_user = user_repository.get_by_email(user.email)
 
     if existing_user:
         raise HTTPException(
@@ -31,28 +21,17 @@ def register_user(
             detail="Email already registered.",
         )
 
-    new_user = User(
-        full_name=user.full_name,
-        email=user.email,
-        password=hash_password(user.password),
-    )
-
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-
-    return new_user
+    return user_repository.create(user)
 
 
 def login_user(
-    user: UserLogin,
+    email: str,
+    password: str,
     db: Session,
 ) -> Token:
-    existing_user = (
-        db.query(User)
-        .filter(User.email == user.email)
-        .first()
-    )
+    user_repository = UserRepository(db)
+
+    existing_user = user_repository.get_by_email(email)
 
     if existing_user is None:
         raise HTTPException(
@@ -61,7 +40,7 @@ def login_user(
         )
 
     if not verify_password(
-        user.password,
+        password,
         existing_user.password,
     ):
         raise HTTPException(

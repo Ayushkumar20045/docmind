@@ -4,19 +4,26 @@ import shutil
 
 from fastapi import UploadFile
 from pypdf import PdfReader
+from sqlalchemy.orm import Session
 
 from app.core.config import PROCESSED_DIRECTORY, UPLOAD_DIRECTORY
+from app.models.user import User
 from app.rag.embedding_service import embedding_service
 from app.rag.splitter import split_text
 from app.rag.vector_store import vector_store
+from app.repositories.document_repository import DocumentRepository
 
 
-def save_pdf(file: UploadFile):
+def save_pdf_file(file: UploadFile) -> Path:
     file_path = UPLOAD_DIRECTORY / file.filename
 
     with file_path.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
+    return file_path
+
+
+def extract_pdf_text(file_path: Path) -> tuple[str, int]:
     reader = PdfReader(file_path)
 
     document_text = ""
@@ -27,6 +34,13 @@ def save_pdf(file: UploadFile):
         if text:
             document_text += text + "\n"
 
+    return document_text, len(reader.pages)
+
+
+def save_processed_text(
+    file_path: Path,
+    document_text: str,
+) -> None:
     text_file = PROCESSED_DIRECTORY / f"{file_path.stem}.txt"
 
     text_file.write_text(
@@ -34,6 +48,11 @@ def save_pdf(file: UploadFile):
         encoding="utf-8",
     )
 
+
+def create_chunks(
+    file_path: Path,
+    document_text: str,
+) -> list[str]:
     chunk_texts = split_text(document_text)
 
     chunk_file = PROCESSED_DIRECTORY / f"{file_path.stem}_chunks.json"
@@ -53,6 +72,13 @@ def save_pdf(file: UploadFile):
         encoding="utf-8",
     )
 
+    return chunk_texts
+
+
+def create_embeddings(
+    file_path: Path,
+    chunk_texts: list[str],
+) -> None:
     vector_store.reset_collection()
 
     embeddings = embedding_service.generate_embeddings(
@@ -65,10 +91,44 @@ def save_pdf(file: UploadFile):
         source=file_path.stem,
     )
 
+
+def process_document(
+    file: UploadFile,
+    db: Session,
+    current_user: User,
+):
+    file_path = save_pdf_file(file)
+
+    document_text, pages = extract_pdf_text(file_path)
+
+    save_processed_text(
+        file_path=file_path,
+        document_text=document_text,
+    )
+
+    chunk_texts = create_chunks(
+        file_path=file_path,
+        document_text=document_text,
+    )
+
+    create_embeddings(
+        file_path=file_path,
+        chunk_texts=chunk_texts,
+    )
+
+    document_repository = DocumentRepository(db)
+
+    document = document_repository.create(
+        filename=file.filename,
+        file_path=str(file_path),
+        file_size=file_path.stat().st_size,
+        user_id=current_user.id,
+    )
+
     return {
-        "filename": file.filename,
-        "file_size": file_path.stat().st_size,
-        "pages": len(reader.pages),
+        "filename": document.filename,
+        "file_size": document.file_size,
+        "pages": pages,
         "characters": len(document_text),
         "chunks": len(chunk_texts),
         "message": "Document uploaded successfully",
