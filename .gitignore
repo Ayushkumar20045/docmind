@@ -5,7 +5,19 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 .venv/
+venv/
+
+# ==========================
+# Environment Variables
+# ==========================
+.env
+*.env
 
 # ==========================
 # ChromaDB
@@ -19,22 +31,24 @@ server/uploads/
 server/processed/
 
 # ==========================
-# Environment
-# ==========================
-.env
-*.env
-
-# ==========================
-# Node
+# Node.js
 # ==========================
 node_modules/
+dist/
+build/
 
 # ==========================
-# VS Code
+# IDEs
 # ==========================
 .vscode/
+.idea/
 
 # ==========================
 # macOS
 # ==========================
 .DS_Store
+
+# ==========================
+# Logs
+# ==========================
+*.log

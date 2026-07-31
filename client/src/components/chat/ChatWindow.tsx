@@ -6,7 +6,7 @@ import TypingIndicator from "./TypingIndicator";
 import UploadWorkspace from "./UploadWorkspace";
 import UserMessage from "./UserMessage";
 
-import { askQuestion } from "../../api/chat";
+import { askQuestion } from "../../services/chat.service";
 
 import type { UploadedDocument } from "../../types/document";
 
@@ -25,6 +25,10 @@ function ChatWindow() {
   const [loading, setLoading] = useState(false);
 
   async function handleSend(question: string) {
+    if (!document) {
+      return;
+    }
+
     const userMessage: Message = {
       id: Date.now(),
       role: "user",
@@ -39,7 +43,10 @@ function ChatWindow() {
     setLoading(true);
 
     try {
-      const response = await askQuestion(question);
+      const response = await askQuestion(
+        document.id,
+        question
+      );
 
       const assistantMessage: Message = {
         id: Date.now() + 1,
@@ -100,7 +107,7 @@ function ChatWindow() {
                 </p>
 
                 <p className="mt-3 text-sm text-emerald-400">
-                  {document.message}
+                  Your document is ready for conversation.
                 </p>
               </div>
             </div>

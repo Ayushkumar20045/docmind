@@ -1,7 +1,11 @@
 import { useRef } from "react";
 import { FileUp } from "lucide-react";
 
-import { uploadDocument } from "../../api/documents";
+import {
+  uploadDocument,
+  getDocuments,
+} from "../../services/document.service";
+
 import type { UploadedDocument } from "../../types/document";
 
 interface UploadWorkspaceProps {
@@ -23,12 +27,23 @@ function UploadWorkspace({
     }
 
     try {
-      const response = await uploadDocument(file);
+      await uploadDocument(file);
 
-      onUploadSuccess(response);
+      const documents = await getDocuments();
+
+      if (documents.length === 0) {
+        throw new Error("No document returned after upload.");
+      }
+
+      // If your backend returns newest first, change this to documents[0]
+      const uploadedDocument = documents[documents.length - 1];
+
+      onUploadSuccess(uploadedDocument);
     } catch (error) {
       console.error(error);
       alert("Failed to upload document.");
+    } finally {
+      event.target.value = "";
     }
   }
 
