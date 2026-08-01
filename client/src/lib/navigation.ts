@@ -1,15 +1,10 @@
 import {
   FileText,
-  MessageSquare,
+  LogOut,
   Settings,
 } from "lucide-react";
 
 export const navigation = [
-  {
-    label: "Chats",
-    href: "/",
-    icon: MessageSquare,
-  },
   {
     label: "Documents",
     href: "/documents",
@@ -19,5 +14,10 @@ export const navigation = [
     label: "Settings",
     href: "/settings",
     icon: Settings,
+  },
+  {
+    label: "Logout",
+    href: "/logout",
+    icon: LogOut,
   },
 ];

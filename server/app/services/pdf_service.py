@@ -7,6 +7,7 @@ from pypdf import PdfReader
 from sqlalchemy.orm import Session
 
 from app.core.config import PROCESSED_DIRECTORY, UPLOAD_DIRECTORY
+from app.models.document import Document
 from app.models.user import User
 from app.rag.embedding_service import embedding_service
 from app.rag.splitter import split_text
@@ -118,7 +119,12 @@ def process_document(
     file: UploadFile,
     db: Session,
     current_user: User,
-):
+) -> tuple[
+    Document,
+    int,
+    int,
+    int,
+]:
     file_path = save_pdf_file(file)
 
     document_text, pages = extract_pdf_text(file_path)
@@ -147,11 +153,9 @@ def process_document(
         user_id=current_user.id,
     )
 
-    return {
-        "filename": document.filename,
-        "file_size": document.file_size,
-        "pages": pages,
-        "characters": len(document_text),
-        "chunks": len(chunk_texts),
-        "message": "Document uploaded successfully",
-    }
+    return (
+        document,
+        pages,
+        len(document_text),
+        len(chunk_texts),
+    )

@@ -2,6 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.models.user import User
+from app.repositories.chat_repository import ChatRepository
 from app.repositories.document_repository import DocumentRepository
 from app.rag.vector_store import vector_store
 from app.services.pdf_service import (
@@ -15,11 +16,29 @@ def upload_document(
     db: Session,
     current_user: User,
 ):
-    return process_document(
+    document, pages, characters, chunks = process_document(
         file=file,
         db=db,
         current_user=current_user,
     )
+
+    chat_repository = ChatRepository(db)
+
+    chat = chat_repository.create(
+        user_id=current_user.id,
+        document_id=document.id,
+    )
+
+    return {
+        "chat_id": chat.id,
+        "document_id": document.id,
+        "filename": document.filename,
+        "file_size": document.file_size,
+        "pages": pages,
+        "characters": characters,
+        "chunks": chunks,
+        "message": "Document uploaded successfully",
+    }
 
 
 def get_documents(

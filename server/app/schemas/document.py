@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 
 class DocumentUploadResponse(BaseModel):
+    chat_id: int
+    document_id: int
     filename: str
     file_size: int
     pages: int

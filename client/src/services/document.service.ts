@@ -17,6 +17,9 @@ export async function uploadDocument(
 
 export async function getDocuments(): Promise<UploadedDocument[]> {
   const response = await api.get("/documents");
-
   return response.data;
+}
+
+export async function deleteDocument(id: number) {
+  await api.delete(`/documents/${id}`);
 }
