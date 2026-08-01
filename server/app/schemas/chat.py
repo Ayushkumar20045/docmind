@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from app.schemas.message import MessageResponse
+
 
 # ==========================
 # Existing Chat API
@@ -46,6 +48,18 @@ class ChatHistoryResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
     document: ChatDocument
+
+    class Config:
+        from_attributes = True
+
+
+class ChatDetailResponse(BaseModel):
+    id: int
+    title: str | None
+    created_at: datetime
+    updated_at: datetime
+    document: ChatDocument
+    messages: list[MessageResponse]
 
     class Config:
         from_attributes = True

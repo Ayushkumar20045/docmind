@@ -3,7 +3,17 @@ import { Plus } from "lucide-react";
 import Navigation from "./Navigation";
 import RecentChats from "./RecentChats";
 
-function Sidebar() {
+import type { ChatHistory } from "../../../services/chat.service";
+
+interface SidebarProps {
+  selectedChatId: number | null;
+  onSelectChat: (chat: ChatHistory) => void;
+}
+
+function Sidebar({
+  selectedChatId,
+  onSelectChat,
+}: SidebarProps) {
   return (
     <aside className="flex h-screen w-80 flex-col border-r border-slate-800 bg-slate-950 px-5 py-6">
       {/* Logo */}
@@ -25,7 +35,10 @@ function Sidebar() {
 
       {/* Chats */}
       <div className="mt-8 flex-1 overflow-y-auto">
-        <RecentChats />
+        <RecentChats
+          selectedChatId={selectedChatId}
+          onSelectChat={onSelectChat}
+        />
       </div>
 
       {/* Navigation */}

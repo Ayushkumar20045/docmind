@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import AIMessage from "./AIMessage";
 import ChatInput from "./ChatInput";
@@ -6,76 +7,95 @@ import TypingIndicator from "./TypingIndicator";
 import UploadWorkspace from "./UploadWorkspace";
 import UserMessage from "./UserMessage";
 
-import { askQuestion } from "../../services/chat.service";
+import {
+  askQuestion,
+  type Message,
+} from "../../services/chat.service";
 
 import type { UploadedDocument } from "../../types/document";
 
-interface Message {
-  id: number;
-  role: "user" | "assistant";
-  content: string;
+interface ChatWindowProps {
+  document: UploadedDocument | null;
+
+  setDocument: Dispatch<
+    SetStateAction<UploadedDocument | null>
+  >;
+
+  messages: Message[];
+
+  setMessages: Dispatch<
+    SetStateAction<Message[]>
+  >;
+
+  selectedChatId: number | null;
+
+  setSelectedChatId: Dispatch<
+    SetStateAction<number | null>
+  >;
 }
 
-function ChatWindow() {
-  const [document, setDocument] =
-    useState<UploadedDocument | null>(null);
+function ChatWindow({
+  document,
+  setDocument,
+  messages,
+  setMessages,
+}: ChatWindowProps) {
+  const [loading, setLoading] =
+    useState(false);
 
-  const [messages, setMessages] = useState<Message[]>([]);
+async function handleSend(question: string) {
+  if (!document) {
+    return;
+  }
 
-  const [loading, setLoading] = useState(false);
+  const userMessage: Message = {
+    id: Date.now(),
+    role: "user",
+    content: question,
+    created_at: new Date().toISOString(),
+  };
 
-  async function handleSend(question: string) {
-    if (!document) {
-      return;
-    }
+  setMessages((previous) => [
+    ...previous,
+    userMessage,
+  ]);
 
-    const userMessage: Message = {
-      id: Date.now(),
-      role: "user",
-      content: question,
+  setLoading(true);
+
+  try {
+    const response = await askQuestion(
+      document.id,
+      question
+    );
+
+    const assistantMessage: Message = {
+      id: Date.now() + 1,
+      role: "assistant",
+      content: response.answer,
+      created_at: new Date().toISOString(),
     };
 
-    setMessages((previousMessages) => [
-      ...previousMessages,
-      userMessage,
+    setMessages((previous) => [
+      ...previous,
+      assistantMessage,
     ]);
+  } catch (error) {
+    console.error(error);
 
-    setLoading(true);
-
-    try {
-      const response = await askQuestion(
-        document.id,
-        question
-      );
-
-      const assistantMessage: Message = {
-        id: Date.now() + 1,
-        role: "assistant",
-        content: response.answer,
-      };
-
-      setMessages((previousMessages) => [
-        ...previousMessages,
-        assistantMessage,
-      ]);
-    } catch (error) {
-      console.error(error);
-
-      const assistantMessage: Message = {
+    setMessages((previous) => [
+      ...previous,
+      {
         id: Date.now() + 1,
         role: "assistant",
         content:
           "Something went wrong while getting a response. Please try again.",
-      };
-
-      setMessages((previousMessages) => [
-        ...previousMessages,
-        assistantMessage,
-      ]);
-    } finally {
-      setLoading(false);
-    }
+        created_at: new Date().toISOString(),
+      },
+    ]);
+  } finally {
+    setLoading(false);
   }
+}
 
   if (!document) {
     return (

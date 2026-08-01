@@ -6,6 +6,8 @@ export interface UploadedDocument {
 }
 
 export interface UploadResponse {
+  chat_id: number;
+  document_id: number;
   filename: string;
   file_size: number;
   pages: number;

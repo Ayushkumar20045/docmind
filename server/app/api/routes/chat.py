@@ -11,8 +11,8 @@ from app.schemas.chat import (
     ChatRequest,
     ChatResponse,
     ChatHistoryResponse,
+    ChatDetailResponse,
 )
-from app.schemas.message import MessageResponse
 from app.services.chat_service import chat_service
 
 router = APIRouter(
@@ -61,7 +61,7 @@ async def get_chats(
 
 @router.get(
     "/history/{chat_id}",
-    response_model=ChatHistoryResponse,
+    response_model=ChatDetailResponse,
 )
 async def get_chat(
     chat_id: int,
@@ -69,22 +69,6 @@ async def get_chat(
     db: Session = Depends(get_db),
 ):
     return chat_service.get_chat(
-        chat_id,
-        db,
-        current_user,
-    )
-
-
-@router.get(
-    "/history/{chat_id}/messages",
-    response_model=List[MessageResponse],
-)
-async def get_messages(
-    chat_id: int,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
-):
-    return chat_service.get_messages(
         chat_id,
         db,
         current_user,

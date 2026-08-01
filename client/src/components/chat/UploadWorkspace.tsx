@@ -29,16 +29,15 @@ function UploadWorkspace({
     try {
       await uploadDocument(file);
 
-      const documents = await getDocuments();
+const documents = await getDocuments();
 
-      if (documents.length === 0) {
-        throw new Error("No document returned after upload.");
-      }
+if (documents.length === 0) {
+  throw new Error("No document returned after upload.");
+}
 
-      // If your backend returns newest first, change this to documents[0]
-      const uploadedDocument = documents[documents.length - 1];
+const uploadedDocument = documents[0];
 
-      onUploadSuccess(uploadedDocument);
+onUploadSuccess(uploadedDocument);
     } catch (error) {
       console.error(error);
       alert("Failed to upload document.");

@@ -23,7 +23,7 @@ class ChatService:
         message_repository = MessageRepository(db)
 
         document = document_repository.get_by_id(
-            document_id
+            document_id,
         )
 
         if document is None:
@@ -105,6 +105,7 @@ class ChatService:
         current_user: User,
     ):
         chat_repository = ChatRepository(db)
+        message_repository = MessageRepository(db)
 
         chat = chat_repository.get_by_id(
             chat_id,
@@ -122,25 +123,18 @@ class ChatService:
                 detail="Not authorized.",
             )
 
-        return chat
-
-    def get_messages(
-        self,
-        chat_id: int,
-        db: Session,
-        current_user: User,
-    ):
-        chat = self.get_chat(
-            chat_id,
-            db,
-            current_user,
-        )
-
-        message_repository = MessageRepository(db)
-
-        return message_repository.get_by_chat(
+        messages = message_repository.get_by_chat(
             chat.id,
         )
+
+        return {
+            "id": chat.id,
+            "title": chat.title,
+            "created_at": chat.created_at,
+            "updated_at": chat.updated_at,
+            "document": chat.document,
+            "messages": messages,
+        }
 
 
 chat_service = ChatService()
