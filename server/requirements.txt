@@ -82,6 +82,7 @@ propcache==0.5.2
 protobuf==7.35.1
 psycopg==3.3.4
 psycopg-binary==3.3.4
+psycopg2-binary==2.9.12
 pyasn1==0.6.4
 pyasn1_modules==0.4.2
 pybase64==1.4.3
