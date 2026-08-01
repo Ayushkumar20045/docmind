@@ -8,27 +8,35 @@ import {
 interface RecentChatsProps {
   selectedChatId: number | null;
   onSelectChat: (chat: ChatHistory) => void;
+  refreshChats: number;
 }
 
 function RecentChats({
   selectedChatId,
   onSelectChat,
+  refreshChats,
 }: RecentChatsProps) {
   const [chats, setChats] = useState<ChatHistory[]>([]);
 
   useEffect(() => {
     async function loadChats() {
       try {
-        const data = await getChats();
+        console.log("Loading chats...");
 
+        const data = await getChats();
+        console.log(data);
+        console.log("Setting chats:", data);
         setChats(data);
+        setTimeout(() => {
+  console.log("Chats state should now be updated");
+}, 0);
       } catch (error) {
         console.error(error);
       }
     }
 
     loadChats();
-  }, []);
+  }, [refreshChats]);
 
   return (
     <div className="mt-8">

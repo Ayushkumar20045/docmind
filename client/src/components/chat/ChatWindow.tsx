@@ -17,9 +17,9 @@ import type { UploadedDocument } from "../../types/document";
 interface ChatWindowProps {
   document: UploadedDocument | null;
 
-  setDocument: Dispatch<
-    SetStateAction<UploadedDocument | null>
-  >;
+setDocument: (
+  document: UploadedDocument
+) => void;
 
   messages: Message[];
 
@@ -32,6 +32,7 @@ interface ChatWindowProps {
   setSelectedChatId: Dispatch<
     SetStateAction<number | null>
   >;
+  refreshChats: () => void;
 }
 
 function ChatWindow({
@@ -39,6 +40,7 @@ function ChatWindow({
   setDocument,
   messages,
   setMessages,
+  refreshChats,
 }: ChatWindowProps) {
   const [loading, setLoading] =
     useState(false);
@@ -67,6 +69,7 @@ async function handleSend(question: string) {
       document.id,
       question
     );
+    refreshChats();
 
     const assistantMessage: Message = {
       id: Date.now() + 1,
