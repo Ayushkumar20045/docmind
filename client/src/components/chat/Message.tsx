@@ -22,7 +22,17 @@ export default function Message({
           "max-w-4xl rounded-2xl px-6 py-5 transition-all duration-300",
           isUser
             ? "bg-blue-600 text-white shadow-lg shadow-blue-600/10"
-            : "border border-slate-700 bg-slate-800/80 text-slate-100 backdrop-blur-sm"
+            : `
+              border border-slate-700
+              bg-slate-800/80
+              text-slate-100
+              backdrop-blur-sm
+              hover:bg-slate-800
+              hover:border-slate-600
+              hover:shadow-xl
+              hover:shadow-blue-500/5
+              hover:-translate-y-0.5
+            `
         )}
       >
         {children}

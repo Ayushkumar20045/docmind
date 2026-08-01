@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { FileUp } from "lucide-react";
+import { useRef, useState } from "react";
+import { CloudUpload, FileCheck } from "lucide-react";
 
 import {
   uploadDocument,
@@ -9,84 +9,165 @@ import {
 import type { UploadedDocument } from "../../types/document";
 
 interface UploadWorkspaceProps {
-  onUploadSuccess: (document: UploadedDocument) => void;
+  onUploadSuccess: (
+    document: UploadedDocument
+  ) => void;
 }
 
 function UploadWorkspace({
   onUploadSuccess,
 }: UploadWorkspaceProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef =
+    useRef<HTMLInputElement>(null);
+
+  const [dragging, setDragging] =
+    useState(false);
+
+  const [selectedFile, setSelectedFile] =
+    useState<File | null>(null);
+
+  async function uploadFile(file: File) {
+    try {
+      setSelectedFile(file);
+
+      // Small delay for smoother UX
+      await new Promise((resolve) =>
+        setTimeout(resolve, 700)
+      );
+
+      await uploadDocument(file);
+
+      const documents =
+        await getDocuments();
+
+      if (documents.length === 0) {
+        throw new Error(
+          "No document returned after upload."
+        );
+      }
+
+      onUploadSuccess(documents[0]);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to upload document.");
+    } finally {
+      setSelectedFile(null);
+    }
+  }
 
   async function handleFileSelect(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const file = event.target.files?.[0];
 
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
-    try {
-      await uploadDocument(file);
+    await uploadFile(file);
 
-const documents = await getDocuments();
+    event.target.value = "";
+  }
 
-if (documents.length === 0) {
-  throw new Error("No document returned after upload.");
-}
+  async function handleDrop(
+    event: React.DragEvent<HTMLDivElement>
+  ) {
+    event.preventDefault();
 
-const uploadedDocument = documents[0];
+    setDragging(false);
 
-onUploadSuccess(uploadedDocument);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to upload document.");
-    } finally {
-      event.target.value = "";
-    }
+    const file =
+      event.dataTransfer.files?.[0];
+
+    if (!file) return;
+
+    await uploadFile(file);
   }
 
   return (
-    <div className="flex h-full items-center justify-center px-8">
-      <div className="w-full max-w-2xl">
-        <div className="rounded-3xl border border-slate-800 bg-slate-900 p-10 shadow-xl">
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-600/10 text-blue-500">
-              <FileUp size={40} strokeWidth={1.8} />
-            </div>
+    <>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf"
+        hidden
+        onChange={handleFileSelect}
+      />
 
-            <h1 className="text-3xl font-bold text-white">
-              Upload your first document
-            </h1>
-
-            <p className="mt-3 max-w-lg text-slate-400">
-              Upload a PDF and start asking questions, generating summaries,
-              and finding information instantly.
-            </p>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf"
-              hidden
-              onChange={handleFileSelect}
+      <div
+        onClick={() => {
+          if (!selectedFile) {
+            fileInputRef.current?.click();
+          }
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={() =>
+          setDragging(false)
+        }
+        onDrop={handleDrop}
+        className={`group cursor-pointer rounded-3xl border-2 border-dashed px-10 py-16 text-center transition-all duration-300 ${
+          dragging
+            ? "border-blue-500 bg-blue-500/5 shadow-[0_0_40px_rgba(37,99,235,0.18)]"
+            : "border-slate-700 bg-slate-900 hover:border-blue-500 hover:bg-slate-900/80 hover:shadow-[0_0_35px_rgba(37,99,235,0.12)]"
+        }`}
+      >
+        <div
+          className={`mx-auto flex h-20 w-20 items-center justify-center rounded-full transition-all duration-300 ${
+            selectedFile
+              ? "bg-emerald-500/10"
+              : "bg-blue-600/10"
+          }`}
+        >
+          {selectedFile ? (
+            <FileCheck
+              size={40}
+              className="text-emerald-400"
             />
-
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="mt-8 rounded-2xl bg-blue-600 px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-blue-500 hover:scale-[1.02] active:scale-95"
-            >
-              Choose PDF
-            </button>
-
-            <p className="mt-4 text-sm text-slate-500">
-              PDF files only • Maximum file size 20 MB
-            </p>
-          </div>
+          ) : (
+            <CloudUpload
+              size={40}
+              className={`text-blue-500 transition-all duration-300 ${
+                dragging
+                  ? "scale-110 -translate-y-1"
+                  : "group-hover:scale-110 group-hover:-translate-y-1"
+              }`}
+            />
+          )}
         </div>
+
+        {selectedFile ? (
+          <>
+            <h2 className="mt-8 text-3xl font-bold text-white">
+              {selectedFile.name}
+            </h2>
+
+            <p className="mt-3 text-emerald-400">
+              Ready to upload...
+            </p>
+
+            <p className="mt-2 text-sm text-slate-500">
+              Uploading your document...
+            </p>
+          </>
+        ) : (
+          <>
+            <h2 className="mt-8 text-3xl font-bold text-white">
+              Drop your PDF here
+            </h2>
+
+            <p className="mt-3 text-slate-400">
+              Drag & drop your document or click
+              anywhere to browse.
+            </p>
+
+            <p className="mt-6 text-sm text-slate-500">
+              Supports PDF files up to 20 MB
+            </p>
+          </>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 

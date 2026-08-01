@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
+import Hero from "../dashboard/Hero";
+import DashboardStats from "../dashboard/DashboardStats";
+
+
 import AIMessage from "./AIMessage";
 import ChatInput from "./ChatInput";
 import TypingIndicator from "./TypingIndicator";
@@ -107,15 +111,27 @@ async function handleSend(question: string) {
   }
 }
 
-  if (!document) {
-    return (
-      <UploadWorkspace
+if (!document) {
+  return (
+    <section className="h-full overflow-y-auto px-8 py-8">
+      <div className="mx-auto flex max-w-6xl flex-col space-y-8">
+<Hero />
+
+<div className="mt-6">
+    <UploadWorkspace
         onUploadSuccess={(uploadedDocument) =>
-          setDocument(uploadedDocument)
+            setDocument(uploadedDocument)
         }
-      />
-    );
-  }
+    />
+</div>
+</div>
+<div className="mt-6">
+    <DashboardStats />
+</div>
+    </section>
+    
+  );
+}
 
   return (
     <div className="flex h-full flex-col">

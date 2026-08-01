@@ -1,10 +1,16 @@
 import {
+  LayoutDashboard,
   FileText,
-  LogOut,
   Settings,
+  LogOut,
 } from "lucide-react";
 
 export const navigation = [
+  {
+    label: "Workspace",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+  },
   {
     label: "Documents",
     href: "/documents",
