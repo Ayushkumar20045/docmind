@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 import AIMessage from "./AIMessage";
@@ -44,6 +44,13 @@ function ChatWindow({
 }: ChatWindowProps) {
   const [loading, setLoading] =
     useState(false);
+    const messagesEndRef =
+  useRef<HTMLDivElement>(null);
+  useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({
+    behavior: "smooth",
+  });
+}, [messages, loading]);
 
 async function handleSend(question: string) {
   if (!document) {
@@ -150,23 +157,25 @@ async function handleSend(question: string) {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-6">
-              {messages.map((message) =>
-                message.role === "user" ? (
-                  <UserMessage
-                    key={message.id}
-                    content={message.content}
-                  />
-                ) : (
-                  <AIMessage
-                    key={message.id}
-                    content={message.content}
-                  />
-                )
-              )}
+<div className="flex flex-col gap-6">
+  {messages.map((message) =>
+    message.role === "user" ? (
+      <UserMessage
+        key={message.id}
+        content={message.content}
+      />
+    ) : (
+      <AIMessage
+        key={message.id}
+        content={message.content}
+      />
+    )
+  )}
 
-              {loading && <TypingIndicator />}
-            </div>
+  {loading && <TypingIndicator />}
+
+  <div ref={messagesEndRef} />
+</div>
           )}
         </div>
       </section>
