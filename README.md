@@ -4,7 +4,7 @@
 
 ### AI-Powered Document Intelligence Platform
 
-Transform PDF documents into intelligent conversations using **Retrieval-Augmented Generation (RAG)**.
+Upload PDFs. Ask Questions. Get Context-Aware Answers.
 
 <p>
 Built with <strong>React</strong>, <strong>FastAPI</strong>, <strong>PostgreSQL</strong>, <strong>ChromaDB</strong>, <strong>Google Gemini Embeddings</strong>, and <strong>Groq Llama 3.3</strong>.
@@ -25,13 +25,7 @@ Built with <strong>React</strong>, <strong>FastAPI</strong>, <strong>PostgreSQL<
 
 # Live Demo
 
-### Frontend
-
 **https://docmind-delta-one.vercel.app**
-
-### Backend API
-
-**https://docmind-iyha.onrender.com**
 
 ---
 
@@ -297,20 +291,6 @@ MODEL_NAME=llama-3.3-70b-versatile
 ```env
 VITE_API_BASE_URL=https://your-backend-url
 ```
-
----
-
-# Future Enhancements
-
-- Multiple Document Chat
-- OCR Support for Scanned PDFs
-- AI Response Streaming
-- Citation Highlighting
-- Chat Export
-- Cloud Storage Integration
-- Document Sharing
-- Mobile App
-- Team Workspaces
 
 ---
 
