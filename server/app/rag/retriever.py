@@ -9,9 +9,11 @@ class Retriever:
         source: str,
         top_k: int = 5,
     ) -> list[str]:
-        query_embedding = embedding_service.generate_embeddings(
-            [query]
-        )[0]
+        query_embedding = (
+            embedding_service.generate_query_embedding(
+                query
+            )
+        )
 
         return vector_store.search(
             query_embedding=query_embedding,
