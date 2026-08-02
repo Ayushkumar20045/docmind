@@ -1,240 +1,355 @@
+<div align="center">
+
 # DocMind
 
-> Turn documents into conversations.
+### AI-Powered Document Intelligence Platform
 
-DocMind is a Retrieval-Augmented Generation (RAG) application that enables users to upload PDF documents and interact with them using natural language. Instead of relying solely on an LLM's pre-trained knowledge, DocMind retrieves the most relevant information from uploaded documents before generating intelligent, context-aware responses.
+Transform PDF documents into intelligent conversations using **Retrieval-Augmented Generation (RAG)**.
 
-The project is being built from scratch with a focus on learning modern AI application development, scalable backend architecture, and production-ready software engineering practices.
+<p>
+Built with <strong>React</strong>, <strong>FastAPI</strong>, <strong>PostgreSQL</strong>, <strong>ChromaDB</strong>, <strong>Google Gemini Embeddings</strong>, and <strong>Groq Llama 3.3</strong>.
+</p>
+
+<br>
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://docmind-delta-one.vercel.app)
+[![Backend API](https://img.shields.io/badge/API-Render-success?style=for-the-badge)](https://docmind-iyha.onrender.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)]
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)]
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-336791?style=for-the-badge&logo=postgresql&logoColor=white)]
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]
+
+</div>
 
 ---
 
-## How It Works
+# Live Demo
 
-```text
-PDF Upload
-    │
-    ▼
-Text Extraction
-    │
-    ▼
-Recursive Chunking
-    │
-    ▼
-Sentence Embeddings
-    │
-    ▼
-ChromaDB Vector Store
-    │
-    ▼
-Semantic Retrieval
-    │
-    ▼
-Groq LLM
-    │
-    ▼
-AI Response
+### Frontend
+
+**https://docmind-delta-one.vercel.app**
+
+### Backend API
+
+**https://docmind-iyha.onrender.com**
+
+---
+
+# Overview
+
+DocMind is an AI-powered document assistant that enables users to upload PDF documents and interact with them through natural language conversations.
+
+Using a **Retrieval-Augmented Generation (RAG)** pipeline, DocMind retrieves the most relevant content from uploaded documents before generating responses, ensuring answers remain grounded in the document rather than relying solely on the language model's general knowledge.
+
+The application combines modern web technologies with vector search and large language models to deliver an intuitive and production-ready document intelligence platform.
+
+---
+
+# Preview
+
+## Landing Page
+
+> `screenshots/landing.png`
+
+<img src="screenshots/landing.png" width="100%">
+
+---
+
+## Dashboard
+
+> `screenshots/dashboard.png`
+
+<img src="screenshots/dashboard.png" width="100%">
+
+---
+
+## AI Chat Interface
+
+> `screenshots/chat.png`
+
+<img src="screenshots/chat.png" width="100%">
+
+---
+
+# Features
+
+- Secure JWT Authentication
+- User Registration & Login
+- Upload PDF Documents
+- Automatic PDF Text Extraction
+- Intelligent Document Chunking
+- Semantic Search using Vector Embeddings
+- AI-Powered Question Answering
+- Retrieval-Augmented Generation (RAG)
+- Conversation History
+- Responsive User Interface
+- Production Deployment
+- Rate Limiting & API Protection
+
+---
+
+# Tech Stack
+
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+
+---
+
+## Backend
+
+- FastAPI
+- Python
+- SQLAlchemy
+- PostgreSQL (Neon)
+- JWT Authentication
+- SlowAPI
+
+---
+
+## Artificial Intelligence
+
+- Google Gemini Embedding API
+- Groq API
+- Llama 3.3 70B Versatile
+- ChromaDB Vector Database
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+## Deployment
+
+- Vercel
+- Render
+- GitHub
+
+---
+
+# Architecture
+
+```
+                    User
+                      │
+                      ▼
+              React Frontend
+                      │
+               REST API Calls
+                      │
+                      ▼
+              FastAPI Backend
+                      │
+      ┌───────────────┼────────────────┐
+      │               │                │
+      ▼               ▼                ▼
+ PostgreSQL      ChromaDB      Gemini Embeddings
+      │               ▲
+      │               │
+      └───────────────┘
+                      │
+                      ▼
+            Groq (Llama 3.3 70B)
+                      │
+                      ▼
+                AI Response
 ```
 
 ---
 
-## Features
+# How It Works
 
-### AI Document Intelligence
+### 1. Upload Document
 
-- Upload PDF documents.
-- Automatic text extraction.
-- Recursive document chunking.
-- Semantic vector search using ChromaDB.
-- Context-aware retrieval.
-- AI-powered question answering using Groq.
-- Automatic document replacement for fresh indexing.
+The user uploads a PDF document through the web interface.
 
-### Authentication
+↓
 
-- User registration.
-- Secure password hashing with bcrypt.
-- JWT-based authentication.
-- User login.
-- Protected API endpoints.
-- Current authenticated user endpoint (`/auth/me`).
-- Email validation.
-- Duplicate account prevention.
+### 2. Text Processing
 
-### Backend
+The backend extracts text from the uploaded PDF and divides it into overlapping chunks for efficient retrieval.
 
-- REST API built with FastAPI.
-- PostgreSQL database integration.
-- SQLAlchemy ORM.
-- Modular backend architecture.
-- Environment-based configuration.
-- Service layer architecture.
+↓
 
----
+### 3. Embedding Generation
 
-## Tech Stack
+Each chunk is converted into vector embeddings using the Google Gemini Embedding API.
 
-### Frontend
+↓
 
-- React
-- Vite
-- TypeScript
-- Tailwind CSS
-- Axios
+### 4. Vector Storage
 
-### Backend
+The generated embeddings are stored in ChromaDB, enabling semantic similarity search.
 
-- FastAPI
-- PostgreSQL
-- SQLAlchemy
-- LangChain
-- ChromaDB
-- Sentence Transformers
-- PyPDF
-- Passlib (bcrypt)
-- Python-JOSE (JWT)
-- Python Dotenv
+↓
 
-### AI
+### 5. User Query
 
-- Retrieval-Augmented Generation (RAG)
-- Groq LLM
-- all-MiniLM-L6-v2 Embeddings
-- Semantic Search
+When a user asks a question, the query is converted into an embedding using the same embedding model.
+
+↓
+
+### 6. Context Retrieval
+
+The most relevant document chunks are retrieved from ChromaDB based on semantic similarity.
+
+↓
+
+### 7. Response Generation
+
+The retrieved context is sent to Groq's Llama 3.3 model, which generates a context-aware answer grounded in the uploaded document.
 
 ---
 
-## Project Structure
+# Folder Structure
 
-```text
-docmind
+```
+DocMind
+│
 ├── client
 │   ├── src
 │   ├── public
+│   ├── package.json
 │   └── ...
 │
 ├── server
 │   ├── app
-│   │   ├── api
-│   │   │   └── routes
-│   │   ├── core
-│   │   ├── models
-│   │   ├── rag
-│   │   ├── schemas
-│   │   ├── services
-│   │   └── utils
+│   │
+│   ├── api
+│   ├── core
+│   ├── models
+│   ├── rag
+│   ├── services
 │   ├── uploads
 │   ├── processed
 │   └── chroma_db
 │
-└── docs
+└── README.md
 ```
 
 ---
 
-## API Endpoints
+# Installation
 
-### Authentication
+## Clone Repository
 
-- `POST /auth/register`
-- `POST /auth/login`
-- `GET /auth/me`
+```bash
+git clone https://github.com/Ayushkumar20045/DocMind.git
 
-### Documents
-
-- `POST /documents/upload`
-
-### Chat
-
-- `POST /chat`
-
----
-
-## Current Progress
-
-### Completed
-
-- PDF Upload
-- PDF Processing
-- Text Extraction
-- Recursive Chunking
-- Embedding Generation
-- ChromaDB Integration
-- Semantic Retrieval
-- Groq LLM Integration
-- RAG Chat API
-- PostgreSQL Integration
-- SQLAlchemy ORM
-- User Authentication
-- JWT Authentication
-- Password Hashing
-- Protected Routes Foundation
-- Service Layer Architecture
-
----
-
-## Upcoming Features
-
-- Repository Layer
-- Alembic Database Migrations
-- Multi-user Document Management
-- Chat History
-- Multiple Document Support
-- Source Citations
-- Frontend Authentication
-- Protected React Routes
-- User Dashboard
-- Conversation Management
-- Docker Deployment
-- CI/CD Pipeline
-
----
-
-## Learning Goals
-
-This project is being developed to gain practical experience with:
-
-- Retrieval-Augmented Generation (RAG)
-- FastAPI
-- PostgreSQL
-- SQLAlchemy
-- JWT Authentication
-- Vector Databases
-- Semantic Search
-- Large Language Models
-- Production Backend Architecture
-- Modern React Development
-
----
-
-## Current Architecture
-
-```text
-                React Frontend
-                       │
-                       ▼
-                 FastAPI Backend
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
- Authentication      RAG Engine     PostgreSQL
-        │              │
-        ▼              ▼
-      JWT        ChromaDB Vector Store
-                        │
-                        ▼
-              Sentence Transformers
-                        │
-                        ▼
-                   Groq LLM
+cd DocMind
 ```
 
 ---
 
-## Status
+## Backend Setup
 
-**Current Version:** Early Development
+```bash
+cd server
 
-Core RAG functionality and user authentication are fully operational. The next phase focuses on expanding the application into a production-ready, multi-user AI document platform.
+python -m venv .venv
+
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
+```
 
 ---
 
-Built while exploring modern Retrieval-Augmented Generation systems, scalable backend architecture, and production-ready AI application development from the ground up.
+## Frontend Setup
+
+```bash
+cd client
+
+npm install
+
+npm run dev
+```
+
+---
+
+# Environment Variables
+
+## Backend
+
+```env
+DATABASE_URL=
+
+SECRET_KEY=
+
+ACCESS_TOKEN_EXPIRE_MINUTES=
+
+GOOGLE_API_KEY=
+
+GROQ_API_KEY=
+
+MODEL_NAME=llama-3.3-70b-versatile
+```
+
+---
+
+## Frontend
+
+```env
+VITE_API_BASE_URL=https://your-backend-url
+```
+
+---
+
+# Future Enhancements
+
+- Multiple Document Chat
+- OCR Support for Scanned PDFs
+- AI Response Streaming
+- Citation Highlighting
+- Chat Export
+- Cloud Storage Integration
+- Document Sharing
+- Mobile App
+- Team Workspaces
+
+---
+
+# Screenshots
+
+Place the screenshots inside:
+
+```
+screenshots/
+│
+├── landing.png
+├── dashboard.png
+└── chat.png
+```
+
+---
+
+# Author
+
+## Ayush Kumar
+
+Computer Science Engineering (Data Science)
+
+**GitHub**
+
+https://github.com/Ayushkumar20045
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+### If you found this project helpful, consider giving it a ⭐ on GitHub!
+
+Built with ❤️ by Ayush Kumar
+
+</div>
