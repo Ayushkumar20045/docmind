@@ -294,20 +294,6 @@ VITE_API_BASE_URL=https://your-backend-url
 
 ---
 
-# Screenshots
-
-Place the screenshots inside:
-
-```
-screenshots/
-│
-├── landing.png
-├── dashboard.png
-└── chat.png
-```
-
----
-
 # Author
 
 ## Ayush Kumar
